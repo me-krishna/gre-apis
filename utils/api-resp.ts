@@ -4,7 +4,15 @@ interface IResponse {
   status: number;
   message: string;
   data: any;
-  metadata: any;
+  metadata: {
+    pagination?: {
+      total_pages: number;
+      current_page: number;
+      total_records: number;
+      current_page_records: number;
+      limit: number;
+    }
+  }
 }
 
 function createResponse(res: Response, { status, message, data, metadata }: IResponse) {

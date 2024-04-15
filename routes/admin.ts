@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jwtMiddleware from '../middleware/jwt';
-import { GetStudents } from '../controller/students';
+import { GetStudents } from '../controller/admin/students';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
