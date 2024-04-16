@@ -25,7 +25,6 @@ export const GetStudents = async (req: Request, res: Response) => {
         }
       });
     } catch (error) {
-      console.log(error);
       createResponse(res, { status: 500, message: 'Internal Server Error', data: null, metadata: {} });
     }
   } else {

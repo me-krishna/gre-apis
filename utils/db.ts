@@ -3,14 +3,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const datebase = createConnection({
+const database = createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 });
 
-datebase.connect((err) => {
+database.connect((err) => {
   if (err) {
     console.log("Error Connecting to Database");
     return;
@@ -19,4 +19,4 @@ datebase.connect((err) => {
 });
 
 
-export default datebase;
+export default database;
