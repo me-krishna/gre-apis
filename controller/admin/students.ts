@@ -5,8 +5,6 @@ import { GetStudentsValidation } from "../../validation/admin/students";
 
 export const GetStudents = async (req: Request, res: Response) => {
   const { value, error, warning } = GetStudentsValidation(req.query);
-
-  console.log(value, error);
   if (!error) {
     try {
       const { page, limit } = value;
