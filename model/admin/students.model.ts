@@ -1,5 +1,4 @@
 import datebase from "../../utils/db";
-import { GetStudents } from '../../controller/admin/students';
 
 export const getListofStudents = async ({ limit, offset }: { limit: number, offset: number }) => {
   return new Promise((resolve, reject) => {
