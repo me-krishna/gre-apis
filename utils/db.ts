@@ -12,10 +12,9 @@ const database = createConnection({
 
 database.connect((err) => {
   if (err) {
-    console.log("Error Connecting to Database");
+    console.error(err?.sqlMessage);
     return;
   }
-  console.log("📶");
 });
 
 
