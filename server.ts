@@ -7,6 +7,9 @@ const router = Router();
 
 const Server: Application = express();
 
+Server.use(express.json());
+Server.use(express.urlencoded({ extended: true }));
+
 Server.use(cors({ origin: '*', methods: 'GET,POST,PUT,DELETE,PATCH' }));
 
 Server.use("/api/v1/admin", adminRouter);

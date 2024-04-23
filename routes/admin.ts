@@ -3,6 +3,7 @@ import jwtMiddleware from '../middleware/jwt';
 import { GetStudents } from '../controller/admin/students';
 import { GetTopics } from '../controller/admin/topics';
 import { GetQuestionById, GetQuestionsFullData, GetQuestionsList, getQuestionTypes } from '../controller/admin/question_factory';
+import { createExam, getAllExams, getExamById } from '../controller/admin/exams';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
@@ -18,4 +19,11 @@ adminRouter.get('/question-types', auth, getQuestionTypes) // Get Question Types
 adminRouter.get('/questions', auth, GetQuestionsList) // Get Questions List
 adminRouter.get('/questions/:q_id', auth, GetQuestionById) // Get Question By ID
 adminRouter.get('/get-questions-full-data', auth, GetQuestionsFullData) // Get Questions Full Data
+
+// Exam Routes
+adminRouter.post('/exam', auth, createExam) // Create Exam (POST)
+adminRouter.get('/exam', auth, getAllExams) // Get All Exams (GET)
+adminRouter.get('/exam/:exam_id', auth, getExamById) // Get Exam By ID (GET)
+
+
 export default adminRouter;
