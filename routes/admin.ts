@@ -4,6 +4,8 @@ import { GetStudents } from '../controller/admin/students';
 import { GetTopics } from '../controller/admin/topics';
 import { GetQuestionById, GetQuestionsFullData, GetQuestionsList, getQuestionTypes } from '../controller/admin/question_factory';
 import { createExam, deleteTheExam, getAllExams, getExamById, getSectionsByExamID, updateExam, updateMultipleSectins, updateSectionIdByUuid } from '../controller/admin/exams';
+import { uploadExamImage } from '../controller/admin/utils';
+import upload from '../utils/upload-config';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
@@ -32,5 +34,9 @@ adminRouter.patch('/exam/:exam_id', auth, deleteTheExam) // Update Exam (PUT)
 adminRouter.get('/sections/:exam_id', auth, getSectionsByExamID)
 adminRouter.patch('/sections/:section_id', auth, updateSectionIdByUuid)
 adminRouter.put('/sections-update/', auth, updateMultipleSectins)
+
+// Geniric Routes
+// upload.single('upload')
+adminRouter.post('/single-upload', auth,upload.single('upload'), uploadExamImage)
 
 export default adminRouter;

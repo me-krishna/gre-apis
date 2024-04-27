@@ -14,7 +14,6 @@ export const createExamInDb = async (exam: any) => {
 }
 
 export const updateExamInDb = async (exam: any) => {
-  console.log(exam);
   return new Promise((resolve, reject) => {
     const query = `UPDATE mern_exams set name = ?, total_duration = ?, updated_at = ? where uuid = ?`;
     database.query(query, exam, (err, result) => {
