@@ -1,11 +1,20 @@
 import { Request, Response } from "express";
 import createResponse from "../../utils/api-resp";
 import { GetQuestionCount, getQuestionTypesData, getListOfQuestions, getQuestionById, getQuestionsFullData } from '../../model/admin/question_factory.model';
-import { GetQuestionsFullDataValidation, GetQuestionsValidation } from "../../validation/admin/question-factory.validation";
+import { GetQuestionsFullDataValidation, GetQuestionsValidation, GetQuestionTypesValidation } from "../../validation/admin/question-factory.validation";
 
 export const getQuestionTypes = async (req: Request, res: Response) => {
+  const { error, value } = GetQuestionTypesValidation(req.query);
+  if (error) {
+    return createResponse(res, {
+      status: 400,
+      message: error.message,
+      data: error,
+      metadata: {}
+    })
+  }
   try {
-    const listOfQuestionTypes = await getQuestionTypesData() as any[];
+    const listOfQuestionTypes = await getQuestionTypesData(value.type) as any[];
     createResponse(res, {
       status: 200,
       message: 'Success',

@@ -1,8 +1,11 @@
 import database from "../../utils/db";
 
-export const getQuestionTypesData = async () => {
+export const getQuestionTypesData = async (type: "all" | "active" | "inactive") => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM mern_question_types`;
+    let query = `SELECT * FROM mern_question_types`;
+    if (type !== "all") {
+      query += ` WHERE status = ${type === "active" ? 1 : 0} ORDER BY order_seq ASC`;
+    }
     database.query(query, (err, result) => {
       if (err) return reject(err);
       resolve(result);

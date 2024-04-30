@@ -15,3 +15,11 @@ export const GetQuestionsFullDataValidation = (quary: any) => {
   });
   return schema.validate(quary, { abortEarly: false });
 }
+
+export const GetQuestionTypesValidation = (quary: any) => {
+  const schema = Joi.object().keys({
+    type: Joi.string(
+    ).required().valid('all', 'active', 'inactive')
+  });
+  return schema.validate(quary, { abortEarly: false });
+}
