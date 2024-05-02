@@ -52,3 +52,15 @@ export const getQuestionsFullData = async (type: string, q_id: number) => {
     })
   })
 }
+
+
+/* New Table */
+export const createQuestions = async (data: any) => {
+  return new Promise((resolve, reject) => {
+    const query = `INSERT INTO questions SET ?`;
+    database.query(query, data, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+  })
+}
