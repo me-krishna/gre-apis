@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jwtMiddleware from '../middleware/jwt';
-import { GetStudents } from '../controller/admin/students';
+import { AddNewStudent, GetStudents, UpdateStudent } from '../controller/admin/students';
 import { GetTopics } from '../controller/admin/topics';
 import { GetQuestionById, GetQuestionsFullData, GetQuestionsList, getQuestionTypes } from '../controller/admin/question_factory';
 import { createExam, deleteTheExam, getAllExams, getExamById, getSectionsByExamID, updateExam, updateMultipleSectins, updateSectionIdByUuid } from '../controller/admin/exams';
@@ -12,6 +12,8 @@ const auth = jwtMiddleware;
 const adminRouter = Router();
 
 adminRouter.get('/students', auth, GetStudents);  // Get Students
+adminRouter.post('/students', auth, AddNewStudent);  // Get Students
+adminRouter.put('/students/:student_id', auth, UpdateStudent);  // Get Students
 
 // Topics Routes
 adminRouter.get('/topics', auth, GetTopics)   // Get Topics
