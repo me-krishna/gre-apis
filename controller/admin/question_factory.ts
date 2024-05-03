@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import createResponse from "../../utils/api-resp";
-import { GetQuestionCount, getQuestionTypesData, getListOfQuestions, getQuestionById, getQuestionsFullData } from '../../model/admin/question_factory.model';
+import { GetQuestionCount, getQuestionTypesData, getListOfQuestions, getQuestionById, getQuestionsFullData, createQuestions } from '../../model/admin/question_factory.model';
 import { GetQuestionsFullDataValidation, GetQuestionsValidation, GetQuestionTypesValidation } from "../../validation/admin/question-factory.validation";
 
 export const getQuestionTypes = async (req: Request, res: Response) => {
@@ -120,3 +120,25 @@ export const GetQuestionsFullData = async (req: Request, res: Response) => {
     })
   }
 }
+
+/* New Question Factory */
+
+// export const CreateQuestion = async (req: Request, res: Response) => {
+//   try {
+//     const { type, data } = req.body;
+//     const question = await createQuestions(type, data) as any[];
+//     createResponse(res, {
+//       status: 200,
+//       message: 'Success',
+//       data: question,
+//       metadata: {}
+//     })
+//   } catch (error) {
+//     createResponse(res, {
+//       status: 500,
+//       message: 'Internal Server Error',
+//       data: null,
+//       metadata: {}
+//     })
+//   }
+// }

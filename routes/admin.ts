@@ -6,7 +6,7 @@ import { GetQuestionById, GetQuestionsFullData, GetQuestionsList, getQuestionTyp
 import { createExam, deleteTheExam, getAllExams, getExamById, getSectionsByExamID, updateExam, updateMultipleSectins, updateSectionIdByUuid } from '../controller/admin/exams';
 import { uploadExamImage } from '../controller/admin/utils';
 import upload from '../utils/upload-config';
-import { createPracticeTest, getAllTests } from '../controller/admin/practice_test';
+import { createPracticeTest, getAllTests, getTestByUuid, updatePracticeTest, updatePracticeTestDeleteStatus } from '../controller/admin/practice_test';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
@@ -38,7 +38,10 @@ adminRouter.put('/sections-update/', auth, updateMultipleSectins)
 
 // Mock Tests
 adminRouter.post("/mock-test", auth, createPracticeTest) // Create Mock Test
+adminRouter.put("/mock-test/:testId", auth, updatePracticeTest) // Create Mock Test
 adminRouter.get('/mock-test', auth, getAllTests) // Get All Mock Tests (GET)
+adminRouter.post('/getTestByUuid', auth, getTestByUuid) // Get Mock Test By ID (GET)
+adminRouter.post('/delete-test', auth, updatePracticeTestDeleteStatus) // Get Mock Test By ID (GET)
 
 // Geniric Routes
 // upload.single('upload')

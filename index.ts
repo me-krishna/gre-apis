@@ -10,5 +10,4 @@ const port = process.env.PORT || 8000;
 
 app.set('port', port);
 app.listen(app.get('port'), () => {
-  // console.log(window?.location.href);
 });
