@@ -46,7 +46,6 @@ export const createPracticeTest = async (req: Request, res: Response) => {
     } else {
       createResponse(res, { status: 500, message: 'Internal Server Error', data: null, metadata: {} });
     }
-    // createResponse(res, { status: 200, message: 'Success', data: rows, metadata: {} });
   } catch (error) {
     createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
   }
@@ -93,7 +92,6 @@ export const updatePracticeTest = async (req: Request, res: Response) => {
     } else {
       createResponse(res, { status: 500, message: 'Internal Server Error', data: null, metadata: {} });
     }
-    // createResponse(res, { status: 200, message: 'Success', data: rows, metadata: {} });
   } catch (error) {
     createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
   }
