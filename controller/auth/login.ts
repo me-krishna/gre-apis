@@ -39,7 +39,12 @@ export default async function Login(req: Request, res: Response) {
       createResponse(res, {
         status: 200,
         message: "Login successful",
-        data: { token },
+        data: {
+          token: token,
+          user: {
+            ...loginData[0]
+          }
+        },
         metadata: {},
       });
     }
