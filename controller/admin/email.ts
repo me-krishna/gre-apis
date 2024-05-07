@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { smtp } from "../../utils/email";
+const SMTP_USER = 'info@drrajus.com'
+const SMTP_PASS = 'krish@1997'
 
 export const sendEmail = async (req: Request, res: Response) => {
   try {
