@@ -7,6 +7,7 @@ import { createExam, deleteTheExam, getAllExams, getExamById, getSectionsByExamI
 import { uploadExamImage } from '../controller/admin/utils';
 import upload from '../utils/upload-config';
 import { createPracticeTest, getAllTests, getTestByUuid, updatePracticeTest, updatePracticeTestDeleteStatus } from '../controller/admin/practice_test';
+import { sendEmail } from '../controller/admin/email';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
@@ -49,5 +50,6 @@ adminRouter.post('/delete-test', auth, updatePracticeTestDeleteStatus) // Get Mo
 // upload.single('upload')
 adminRouter.post('/single-upload', auth, upload.single('upload'), uploadExamImage)
 
+adminRouter.get('/email', auth, sendEmail)
 
 export default adminRouter;
