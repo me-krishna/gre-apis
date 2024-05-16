@@ -29,8 +29,8 @@ export default async function Login(req: Request, res: Response) {
     } else {
       const token = sign({
         userId: loginData[0].id,
-        name: loginData[0].name,
         email: loginData[0].email,
+        course: loginData[0].course,
       },
         process.env.JWT_SECRET!
         , {
