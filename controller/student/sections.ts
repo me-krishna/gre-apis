@@ -5,7 +5,6 @@ import { getSectionsByExamIdModel } from "../../model/admin/exams.model";
 
 export const getSectionsByExamIDStudent = async (req: Request, res: Response) => {
   try {
-    console.log(req.body)
     const sections = await getSectionsByExamIdModel(req?.body?.user.course) as any[];
 
     createResponse(res, {

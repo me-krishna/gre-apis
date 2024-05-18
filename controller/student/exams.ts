@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import createResponse from "../../utils/api-resp";
-import { createSectionMain, getAttemptedExamModel, getListOfexamsModel } from "../../model/student/exams";
+import { createSectionMain, createSectionQuestios, getAttemptedExamModel, getListOfexamsModel } from "../../model/student/exams";
 import { v4 } from "uuid";
 import { getPracticeTestByIdModel } from "../../model/admin/practice_test.model";
+import { getQuestionsByPracticeTestId } from "../../model/admin/question_factory.model";
 
 export const getListOfexams = async (req: Request, res: Response) => {
   try {
@@ -41,27 +42,33 @@ export const generateExamSection = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body.user
     const { praticeExamID } = req.body
+
     const createSectionPayload = {
-      user_id : userId,
-      pratice_test_id : praticeExamID,
+      user_id: userId,
+      pratice_test_id: praticeExamID,
       section_id: v4(),
     }
-
-    const getQuestion = await getPracticeTestByIdModel(praticeExamID) as any[];
-
     const createSection = await createSectionMain(createSectionPayload) as any;
-createResponse(res, {
+
+    const testData = await getPracticeTestByIdModel(praticeExamID) as any[];
+    const sectionsDatasPromises = testData.map(async (a) => {
+      const sectionsDatas = await getQuestionsByPracticeTestId(a.uuid, a.id) as any[];
+      let bcs = sectionsDatas.map((section) => {
+        return [createSectionPayload.section_id, section.uuid, section.section_id, a.section_name.split(" ")[1], ""]
+      })
+      return await createSectionQuestios(bcs);
+    });
+    await Promise.all(sectionsDatasPromises);
+    createResponse(res, {
       status: 200,
       message: "Section created",
       data: {
         section_id: createSectionPayload.section_id,
-        questions: getQuestion
       },
       metadata: {
-
       },
-    
-})
+
+    })
   } catch (error) {
     createResponse(res, {
       status: 500,

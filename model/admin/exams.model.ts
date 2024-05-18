@@ -97,7 +97,6 @@ export const UpdateDeleteStatus = async (exam_id: string) => {
 }
 
 export const getSectionsByExamIdModel = async (exam_id: string) => {
-  console.log(exam_id , 'test');
   return new Promise((resolve, reject) => {
     const query = `SELECT * FROM mern_exam_sections WHERE exam_id = ? and status=1`;
     database.query(query, exam_id, (err, result) => {

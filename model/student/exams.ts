@@ -37,3 +37,27 @@ export const createSectionMain = async (data: any) => {
     })
   });
 }
+
+export const createSectionQuestios = async (data: any[]) => {
+  return new Promise((resolve, reject) => {
+    const query = `INSERT INTO mern_section_questions (test_section_id,question_id,question_section_id,question_section_no,correct_ans) VALUES ?`;
+    database.query(query, [data], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+}
+
+export const getInfoAboutExamDb = async (examId: number) => {
+  return new Promise((resolve, reject) => {
+    const query = `select * from mern_practice_test where id = ${examId}`;
+    database.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+}

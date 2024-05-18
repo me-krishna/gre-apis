@@ -42,7 +42,7 @@ export async function getCountOfPratcieTest() {
 
 export async function getPracticeTestByIdModel(id: string) {
   return new Promise((resolve, reject) => {
-    const query = `SELECT a.*,b.uuid FROM mern_practice_test a inner join mern_exam_sections b on a.exam_pattren_Id = b.exam_id  WHERE a.uuid = '${id}' `;
+    const query = `SELECT a.*,b.uuid ,b.section_name FROM mern_practice_test a inner join mern_exam_sections b on a.exam_pattren_Id = b.exam_id  WHERE a.uuid = '${id}' `;
     database.query(query, (err, result) => {
       if (err) return reject(err);
       resolve(result);
