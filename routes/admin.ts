@@ -8,9 +8,12 @@ import { uploadExamImage } from '../controller/admin/utils';
 import upload from '../utils/upload-config';
 import { createPracticeTest, getAllTests, getTestByUuid, updatePracticeTest, updatePracticeTestDeleteStatus } from '../controller/admin/practice_test';
 import { sendEmail } from '../controller/admin/email';
+import Login from '../controller/auth/login';
 
 const auth = jwtMiddleware;
 const adminRouter = Router();
+
+adminRouter.post('/login', Login);  // Get Students
 
 adminRouter.get('/students', auth, GetStudents);  // Get Students
 adminRouter.post('/students', auth, AddNewStudent);  // Get Students
@@ -48,7 +51,7 @@ adminRouter.post('/delete-test', auth, updatePracticeTestDeleteStatus) // Get Mo
 
 // Geniric Routes
 // upload.single('upload')
-adminRouter.post('/single-upload', auth, upload.single('upload'), uploadExamImage)
+adminRouter.post('/single-upload', upload.single('upload'), uploadExamImage)
 
 adminRouter.get('/email', auth, sendEmail)
 

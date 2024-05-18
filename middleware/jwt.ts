@@ -23,6 +23,7 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
     const mainTocken = token?.split(" ")[1];
     const decoded = verify(mainTocken,process.env.JWT_SECRET!);
     req.body.user = decoded
+    next();
   } catch (error) {
     return createResponse(res, {
       status: 401,
@@ -30,11 +31,7 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
       data: null,
       metadata: {}
     })
-  } finally {
-    next();
-  }
-
-
+  } 
 }
 
 export default jwtMiddleware;

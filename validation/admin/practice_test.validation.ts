@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 export function createPracticeTestValidation(params: any) {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     testTitle: Joi.string().required(),
     pattren: Joi.number().required(),
     status: Joi.number().required(),
@@ -12,6 +13,7 @@ export function createPracticeTestValidation(params: any) {
 }
 export function updatePracticeTestValidation(params: any) {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     testId: Joi.string().required(),
     testTitle: Joi.string().required(),
     pattren: Joi.number().required(),
@@ -24,6 +26,7 @@ export function updatePracticeTestValidation(params: any) {
 
 export const getTestValidation = (query: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     page: Joi.number().required(),
     limit: Joi.number().required()
   });

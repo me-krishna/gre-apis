@@ -24,3 +24,16 @@ export const getAttemptedExamModel = async (testId: number, userId: number) => {
     })
   });
 }
+
+
+export const createSectionMain = async (data: any) => {
+  return new Promise((resolve, reject) => {
+    const query = `INSERT INTO mern_practicetest_sections SET ?`;
+    database.query(query, data, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+}

@@ -77,6 +77,7 @@ export const updateQuestions = async (data: any, id: number) => {
 }
 
 export const getQuestionsByPracticeTestId = async (data: string, id: number) => {
+  console.log(data, id);
   return new Promise((resolve, reject) => {
     const query = `select * from mern_questions where test_id='${id}' and section_id='${data}' `;
     database.query(query, data, (err, result) => {

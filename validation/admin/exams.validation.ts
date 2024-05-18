@@ -2,6 +2,7 @@ import Joi from "joi"
 
 export const createExamValidation = (query: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     name: Joi.string().required(),
     no_sections: Joi.number().required(),
     sections: Joi.array().items(Joi.object().keys({
@@ -15,6 +16,7 @@ export const createExamValidation = (query: any) => {
 }
 export const updateExamValidation = (query: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     exam_id: Joi.string().required(),
     name: Joi.string().required(),
     duration: Joi.number().required(),
@@ -25,6 +27,7 @@ export const updateExamValidation = (query: any) => {
 
 export const getExamValidation = (query: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     page: Joi.number().required(),
     limit: Joi.number().required()
   });
@@ -33,6 +36,7 @@ export const getExamValidation = (query: any) => {
 
 export const deleteTheExamValidation = (query: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     exam_id: Joi.string().required()
   });
   return schema.validate(query, { abortEarly: false });
@@ -40,6 +44,7 @@ export const deleteTheExamValidation = (query: any) => {
 
 export const getSectionsByExamIdValidation = (params: any) => {
   const schema = Joi.object().keys({
+    user : Joi.optional(),
     exam_id: Joi.string().required()
   });
   return schema.validate(params, { abortEarly: false });

@@ -68,7 +68,7 @@ export const getAllExamsModel = async (limit: number, offset: number) => {
 
 export const getExamByIdModel = async (exam_id: string) => {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM mern_exams WHERE uuid = ? where delete_status=0`;
+    const query = `SELECT * FROM mern_exams WHERE uuid = ? and delete_status=0`;
     database.query(query, exam_id, (err, result) => {
       if (err) return reject(err);
       resolve(result);
@@ -97,8 +97,9 @@ export const UpdateDeleteStatus = async (exam_id: string) => {
 }
 
 export const getSectionsByExamIdModel = async (exam_id: string) => {
+  console.log(exam_id , 'test');
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM mern_exam_sections WHERE exam_id = ?`;
+    const query = `SELECT * FROM mern_exam_sections WHERE exam_id = ? and status=1`;
     database.query(query, exam_id, (err, result) => {
       if (err) return reject(err);
       resolve(result);

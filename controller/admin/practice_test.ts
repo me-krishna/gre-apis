@@ -127,6 +127,7 @@ export const getTestByUuid = async (req: Request, res: Response) => {
   try {
     const uuid = req.body.uuid;
     const testData = await getPracticeTestByIdModel(uuid) as any[];
+    console.log(testData)
     const sectionsDatasPromises = testData.map(async (a) => {
       const sectionsDatas = await getQuestionsByPracticeTestId(a.uuid, a.id) as any[];
       return {

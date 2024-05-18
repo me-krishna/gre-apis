@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default async function Login(req: Request, res: Response) {
+  console.log("login")
   const { error, value } = loginValidatin(req.body);
   if (error) {
     createResponse(res, {
