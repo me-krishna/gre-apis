@@ -14,7 +14,6 @@ export const getListOfexamsModel = async (pattren: number, userId: number) => {
 }
 
 export const getAttemptedExamModel = async (testId: number, userId: number) => {
-  console.log(testId, userId);
   return new Promise((resolve, reject) => {
     const query = `select section_id,test_status from mern_practicetest_sections where pratice_test_id = '${testId}' and user_id = ${userId}`;
     database.query(query, (err, result) => {

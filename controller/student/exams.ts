@@ -11,7 +11,6 @@ export const getListOfexams = async (req: Request, res: Response) => {
     const examData = await getListOfexamsModel(examid, userId) as any[];
     const attemptedExams = await examData.map(async (exam) => {
       const attemptedExam = await getAttemptedExamModel(exam.uuid, userId) as any[];
-      console.log(attemptedExam);
       if (attemptedExam.length > 0) {
         exam.attempted = true;
         exam.attemptedData = attemptedExam[0];
