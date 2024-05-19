@@ -14,8 +14,9 @@ export const getListOfexamsModel = async (pattren: number, userId: number) => {
 }
 
 export const getAttemptedExamModel = async (testId: number, userId: number) => {
+  console.log(testId, userId);
   return new Promise((resolve, reject) => {
-    const query = `select * from mern_exam_attempted where test_id = ${testId} and userid = ${userId}`;
+    const query = `select section_id,test_status from mern_practicetest_sections where pratice_test_id = '${testId}' and user_id = ${userId}`;
     database.query(query, (err, result) => {
       if (err) {
         reject(err);
@@ -53,6 +54,18 @@ export const createSectionQuestios = async (data: any[]) => {
 export const getInfoAboutExamDb = async (examId: number) => {
   return new Promise((resolve, reject) => {
     const query = `select * from mern_practice_test where id = ${examId}`;
+    database.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+}
+
+export const getListofQuestionInaSection = async (sectionId: string, qsid: string) => {
+  return new Promise((resolve, reject) => {
+    const query = `select * from mern_section_questions where test_section_id = '${sectionId}' and question_section_id = '${qsid}'`;
     database.query(query, (err, result) => {
       if (err) {
         reject(err);

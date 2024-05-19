@@ -10,7 +10,8 @@ export const getListOfexams = async (req: Request, res: Response) => {
     const { course: examid, userId } = req.body.user
     const examData = await getListOfexamsModel(examid, userId) as any[];
     const attemptedExams = await examData.map(async (exam) => {
-      const attemptedExam = await getAttemptedExamModel(exam.id, userId) as any[];
+      const attemptedExam = await getAttemptedExamModel(exam.uuid, userId) as any[];
+      console.log(attemptedExam);
       if (attemptedExam.length > 0) {
         exam.attempted = true;
         exam.attemptedData = attemptedExam[0];
@@ -64,6 +65,7 @@ export const generateExamSection = async (req: Request, res: Response) => {
       message: "Section created",
       data: {
         section_id: createSectionPayload.section_id,
+        question_section_id: testData[0].uuid,
       },
       metadata: {
       },
