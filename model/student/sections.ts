@@ -16,6 +16,7 @@ export const getDetailsSectionDataOfExamDb = async (sectionId: string) => {
     const query = `SELECT
         a.last_question,
         a.section_timer,
+        a.last_section,
         a.pratice_test_id,
         b.title as exam_title,
         c.id as exam_id,
@@ -43,4 +44,50 @@ export const getDetailsSectionDataOfExamDb = async (sectionId: string) => {
       resolve(result);
     })
   });
+}
+
+export const getExamQuestionDb = async (sessionId: string, sectionsId: string, questionNumber: number) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT
+    *
+  FROM
+    mern_section_questions msq
+  inner join mern_questions mq on
+    msq.question_id = mq.uuid
+  WHERE
+    msq.test_section_id = '${sessionId}'
+    AND msq.question_section_id = '${sectionsId}'
+  ORDER BY
+    msq.id DESC
+  LIMIT ${questionNumber}`;
+    database.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  })
+}
+
+export const updateExamSectionDataDB = async (sectionId: string, data: any) => {
+  return new Promise((resolve, reject) => {
+    const query = `UPDATE mern_practicetest_sections SET ? WHERE section_id = '${sectionId}'`;
+    database.query(query, data, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  })
+}
+export const updateExamSectionQuestionDataDB = async (questionId: string, data: any) => {
+  return new Promise((resolve, reject) => {
+    const query = `UPDATE mern_section_questions SET ? WHERE id = '${questionId}'`;
+    database.query(query, data, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  })
 }

@@ -73,3 +73,37 @@ export const getListofQuestionInaSection = async (sectionId: string, qsid: strin
     })
   });
 }
+
+export const getListOfExamQuestionsDb = async (sectionId: string) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT
+    msq.id as qid,
+    msq.*,
+    mq.*
+  FROM
+    mern_section_questions msq
+  inner join mern_questions mq on
+    msq.question_id = mq.uuid
+  WHERE
+    msq.test_section_id = '${sectionId}'`;
+    database.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+
+  })
+}
+
+export const updatePracticeTestSessionDb = async (data: any, section_id:string) => {
+  return new Promise((resolve, reject) => {
+    const query = `UPDATE mern_practicetest_sections SET ? WHERE id = ${data.id}`;
+    database.query(query, data, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+}

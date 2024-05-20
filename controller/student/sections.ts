@@ -3,7 +3,7 @@ import createResponse from "../../utils/api-resp";
 import { getSectionsByExamIdValidation } from "../../validation/admin/exams.validation";
 import { getSectionsByExamIdModel } from "../../model/admin/exams.model";
 import { getListofQuestionInaSection } from "../../model/student/exams";
-import { getDetailsSectionDataOfExamDb } from "../../model/student/sections";
+import { getDetailsSectionDataOfExamDb, getExamQuestionDb, updateExamSectionDataDB, updateExamSectionQuestionDataDB } from "../../model/student/sections";
 
 export const getSectionsByExamIDStudent = async (req: Request, res: Response) => {
   try {
@@ -58,6 +58,7 @@ export const getExamSectionFullDetails = async (req: Request, res: Response) => 
         last_question: resp[0].last_question,
         section_timer: resp[0].section_timer,
         pratice_test_id: resp[0].pratice_test_id,
+        last_section: resp[0].last_section,
         exam_title: resp[0].exam_title,
         exam_id: resp[0].exam_id,
         no_sections: resp[0].no_sections,
@@ -83,3 +84,49 @@ export const getExamSectionFullDetails = async (req: Request, res: Response) => 
     createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
   }
 }
+
+export const getExamQuestion = async (req: Request, res: Response) => {
+  try {
+    const { sessionId, sectionsId, questionNumber } = req.body;
+    let resp = await getExamQuestionDb(sessionId, sectionsId, questionNumber) as any[];
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: resp[0],
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+
+
+export const updateExamSectionData = async (req: Request, res: Response) => {
+  try {
+    const { section_id, updateData } = req.body;
+    let resp = await updateExamSectionDataDB(section_id, updateData) as any[];
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: resp[0],
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+export const updateExamSectionQuestionData = async (req: Request, res: Response) => {
+  try {
+    const { qid, updateData } = req.body;
+    let resp = await updateExamSectionQuestionDataDB(qid, updateData) as any[];
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: resp[0],
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+

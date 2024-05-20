@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import createResponse from "../../utils/api-resp";
-import { createSectionMain, createSectionQuestios, getAttemptedExamModel, getListOfexamsModel } from "../../model/student/exams";
+import { createSectionMain, createSectionQuestios, getAttemptedExamModel, getListOfExamQuestionsDb, getListOfexamsModel, updatePracticeTestSessionDb } from "../../model/student/exams";
 import { v4 } from "uuid";
 import { getPracticeTestByIdModel } from "../../model/admin/practice_test.model";
 import { getQuestionsByPracticeTestId } from "../../model/admin/question_factory.model";
@@ -79,3 +79,28 @@ export const generateExamSection = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const getListExamQuestions = async (req: Request, res: Response) => {
+  try {
+    const { section_id } = req.body;
+    let resp = await getListOfExamQuestionsDb(section_id) as any[];
+    let questions = resp.map((question) => (
+      {
+        ...question,
+        question_config: JSON.parse(question.question_config),
+        blanks: JSON.parse(question.blanks),
+        non_blanks: JSON.parse(question.non_blanks),
+      }
+    )).sort((a, b) => a.question_section_no - b.question_section_no);
+
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: questions,
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+
