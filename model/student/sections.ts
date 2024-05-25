@@ -91,3 +91,15 @@ export const updateExamSectionQuestionDataDB = async (questionId: string, data: 
     })
   })
 }
+
+export const getListOfQuestionDataBasedOnQuestionIdDb = async (qsid: string, sid: string) => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM mern_section_questions WHERE question_section_id = '${qsid}' and test_section_id = '${sid}'`;
+    database.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  })
+}

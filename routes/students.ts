@@ -2,7 +2,7 @@ import { Router } from 'express';
 import jwtMiddleware from '../middleware/jwt';
 import { generateExamSection, getListExamQuestions, getListOfexams } from '../controller/student/exams';
 import Login from '../controller/auth/login';
-import { getExamQuestion, getExamSectionFullDetails, getQuestionsDataBySections, getSectionsByExamIDStudent, updateExamSectionData, updateExamSectionQuestionData } from '../controller/student/sections';
+import { getExamQuestion, getExamSectionFullDetails, getListOfQuestionDataBasedOnQuestionId, getQuestionsDataBySections, getSectionsByExamIDStudent, updateExamSectionData, updateExamSectionQuestionData } from '../controller/student/sections';
 
 const auth = jwtMiddleware;
 const students = Router();
@@ -17,6 +17,7 @@ students.post('/getExamQuestion', auth, getExamQuestion);
 students.post('/updateExamSection', auth, updateExamSectionData);
 students.post('/updateExamQuestionSection', auth, updateExamSectionQuestionData);
 students.post('/getListExamQuestions', auth, getListExamQuestions);
+students.post('/getListExamQuestionDataBasedOnQSections', auth, getListOfQuestionDataBasedOnQuestionId);
 
 
 export default students;

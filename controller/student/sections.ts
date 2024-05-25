@@ -3,7 +3,7 @@ import createResponse from "../../utils/api-resp";
 import { getSectionsByExamIdValidation } from "../../validation/admin/exams.validation";
 import { getSectionsByExamIdModel } from "../../model/admin/exams.model";
 import { getListofQuestionInaSection } from "../../model/student/exams";
-import { getDetailsSectionDataOfExamDb, getExamQuestionDb, updateExamSectionDataDB, updateExamSectionQuestionDataDB } from "../../model/student/sections";
+import { getDetailsSectionDataOfExamDb, getExamQuestionDb, getListOfQuestionDataBasedOnQuestionIdDb, updateExamSectionDataDB, updateExamSectionQuestionDataDB } from "../../model/student/sections";
 
 export const getSectionsByExamIDStudent = async (req: Request, res: Response) => {
   try {
@@ -130,3 +130,18 @@ export const updateExamSectionQuestionData = async (req: Request, res: Response)
   }
 }
 
+
+export const getListOfQuestionDataBasedOnQuestionId = async (req: Request, res: Response) => {
+  try {
+    const { qsid, sid } = req.body;
+    let resp = await getListOfQuestionDataBasedOnQuestionIdDb(qsid, sid) as any[];
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: resp,
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
