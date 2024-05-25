@@ -12,7 +12,7 @@ const database = createConnection({
 
 database.connect((err) => {
   if (err) {
-    console.error(err?.sqlMessage);
+    console.log(err);
     return;
   }
 });

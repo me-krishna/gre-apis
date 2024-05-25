@@ -52,3 +52,36 @@ export const getQuestionsFullData = async (type: string, q_id: number) => {
     })
   })
 }
+
+
+/* New Table */
+export const createQuestions = async (data: any) => {
+  return new Promise((resolve, reject) => {
+    const query = `INSERT INTO mern_questions SET ?`;
+    database.query(query, data, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+  })
+}
+
+export const updateQuestions = async (data: any, id: number) => {
+  return new Promise((resolve, reject) => {
+    const query = `UPDATE mern_questions SET ? WHERE id = ${id
+      }`;
+    database.query(query, data, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+  })
+}
+
+export const getQuestionsByPracticeTestId = async (data: string, id: number) => {
+  return new Promise((resolve, reject) => {
+    const query = `select * from mern_questions where test_id='${id}' and section_id='${data}' `;
+    database.query(query, data, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+  })
+}
