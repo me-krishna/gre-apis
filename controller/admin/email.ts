@@ -7,7 +7,7 @@ export const sendEmail = async (req: Request, res: Response) => {
   try {
     const { email, subject, message } = req.body;
     smtp.sendMail({
-      from: 'jayasurya@drrajus.in',
+      from: 'bhargavpulluru5@gmail.com',
       to: 'krishnapulluru5@gmail.com',
       subject: 'Test Email',
       text: 'Hello World'

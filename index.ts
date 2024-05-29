@@ -10,4 +10,5 @@ const port = process.env.PORT || 8000;
 
 app.set('port', port);
 app.listen(app.get('port'), () => {
+  console.log(`Server is running on :${app.get('port')}`);
 });
