@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import createResponse from "../../utils/api-resp";
-import { createSectionMain, createSectionQuestios, getAttemptedExamModel, getListOfExamQuestionsDb, getListOfexamsModel, updatePracticeTestSessionDb } from "../../model/student/exams";
+import { createSectionMain, createSectionQuestios, examWrittenData, getAttemptedExamModel, getListOfExamQuestionsDb, getListOfexamsModel, updatePracticeTestSessionDb } from "../../model/student/exams";
 import { v4 } from "uuid";
 import { getPracticeTestByIdModel } from "../../model/admin/practice_test.model";
 import { getQuestionsByPracticeTestId } from "../../model/admin/question_factory.model";
+import { updateExamSectionDataDB } from "../../model/student/sections";
 
 export const getListOfexams = async (req: Request, res: Response) => {
   try {
@@ -104,3 +105,61 @@ export const getListExamQuestions = async (req: Request, res: Response) => {
   }
 }
 
+export const submitTheFinalExam = async (req: Request, res: Response) => {
+  try {
+    const { section_id } = req.body;
+    let updateSectionData = await updateExamSectionDataDB(section_id, {
+      test_status: 1
+    }) as any
+    console.log(updateSectionData?.affectedRows);
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: [],
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+
+export const getSummaryOfPeroformance = async (req: Request, res: Response) => {
+  try {
+    const { section_id } = req.body;
+    const scores = await getScors(section_id);
+    createResponse(res, {
+      status: 200,
+      message: 'Success',
+      data: scores,
+      metadata: {}
+    })
+  } catch (error) {
+    createResponse(res, { status: 500, message: error instanceof Error ? error.message : "Internal Server Error", data: null, metadata: {} });
+  }
+}
+
+const getScors = async (section_id: string) => {
+  let resp = await examWrittenData(section_id) as any[];
+  let object_devide = resp.filter((item: any) => item.topic_id !== 1).reduce((acc: any, current: any) => {
+    if (!acc[current.question_section_id]) {
+      acc[current.question_section_id] = {};
+    }
+    acc[current.question_section_id] = {
+      ...acc[current.question_section_id],
+      sectionNo: current.question_section_no,
+      sectionName: current.section_name,
+      topicName: current.name,
+      totalQuestions: current.no_of_questions,
+      totalAttempted: (acc[current.question_section_id].totalAttempted ? acc[current.question_section_id].totalAttempted : 0) + (current.attempt_ans !== null && current.attempt_ans !== '' ? 1 : 0),
+      totalUnAttempted: (acc[current.question_section_id].totalUnAttempted ? acc[current.question_section_id].totalUnAttempted : 0) + (current.attempt_ans === null || current.attempt_ans === '' ? 1 : 0),
+      totalCorrectly: (acc[current.question_section_id].totalCorrectly ? acc[current.question_section_id].totalCorrectly : 0) + (
+        current.attempt_ans === current.correct_ans ? 1 : 0
+      ),
+      totalInCorrectly: (acc[current.question_section_id].totalInCorrectly ? acc[current.question_section_id].totalInCorrectly : 0) + (
+        current.attempt_ans !== current.correct_ans ? 1 : 0
+      ),
+    };
+    return acc;
+  }, {});
+  return object_devide;
+}

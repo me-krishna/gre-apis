@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jwtMiddleware from '../middleware/jwt';
-import { generateExamSection, getListExamQuestions, getListOfexams } from '../controller/student/exams';
+import { generateExamSection, getListExamQuestions, getListOfexams, getSummaryOfPeroformance, submitTheFinalExam } from '../controller/student/exams';
 import Login from '../controller/auth/login';
 import { getExamQuestion, getExamSectionFullDetails, getListOfQuestionDataBasedOnQuestionId, getQuestionsDataBySections, getSectionsByExamIDStudent, updateExamSectionData, updateExamSectionQuestionData } from '../controller/student/sections';
 
@@ -18,6 +18,8 @@ students.post('/updateExamSection', auth, updateExamSectionData);
 students.post('/updateExamQuestionSection', auth, updateExamSectionQuestionData);
 students.post('/getListExamQuestions', auth, getListExamQuestions);
 students.post('/getListExamQuestionDataBasedOnQSections', auth, getListOfQuestionDataBasedOnQuestionId);
+students.post('/submitTheFinalExam', auth, submitTheFinalExam);
+students.post('/summaryOfPerformance', auth, getSummaryOfPeroformance);
 
 
 export default students;
