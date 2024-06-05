@@ -111,7 +111,6 @@ export const submitTheFinalExam = async (req: Request, res: Response) => {
     let updateSectionData = await updateExamSectionDataDB(section_id, {
       test_status: 1
     }) as any
-    console.log(updateSectionData?.affectedRows);
     createResponse(res, {
       status: 200,
       message: 'Success',
@@ -156,8 +155,9 @@ const getScors = async (section_id: string) => {
         current.attempt_ans === current.correct_ans ? 1 : 0
       ),
       totalInCorrectly: (acc[current.question_section_id].totalInCorrectly ? acc[current.question_section_id].totalInCorrectly : 0) + (
-        current.attempt_ans !== current.correct_ans ? 1 : 0
+        current.attempt_ans !== null && current.attempt_ans !== current.correct_ans ? 1 : 0
       ),
+
     };
     return acc;
   }, {});

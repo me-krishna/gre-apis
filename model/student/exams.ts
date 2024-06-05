@@ -79,11 +79,17 @@ export const getListOfExamQuestionsDb = async (sectionId: string) => {
     const query = `SELECT
     msq.id as qid,
     msq.*,
-    mq.*
+    mq.*,
+    mes.topic_id,
+    met.name as topicName 
   FROM
-    mern_section_questions msq
+  mern_section_questions msq
   inner join mern_questions mq on
     msq.question_id = mq.uuid
+  INNER JOIN mern_exam_sections mes on
+    mes.uuid = msq.question_section_id
+  INNER JOIN mern_exam_topics met 
+     on met.id = mes.topic_id
   WHERE
     msq.test_section_id = '${sectionId}'`;
     database.query(query, (err, result) => {
