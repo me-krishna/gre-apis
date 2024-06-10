@@ -14,7 +14,7 @@ export const getListOfexams = async (req: Request, res: Response) => {
       const attemptedExam = await getAttemptedExamModel(exam.uuid, userId) as any[];
       if (attemptedExam.length > 0) {
         exam.attempted = true;
-        exam.attemptedData = attemptedExam[0];
+        exam.attemptedData = attemptedExam??[];
       } else {
         exam.attempted = false;
       }

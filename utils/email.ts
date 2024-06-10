@@ -21,8 +21,10 @@ export const smtp = createTransport({
   requireTLS: true,
   debug: true,
   auth: {
-    user: 'bhargavlalkrishnareddypulluru@gmail.com',
-    pass: 'klos lgcu bazg ahgz'
+    // user: 'bhargavlalkrishnareddypulluru@gmail.com',
+    // pass: 'klos lgcu bazg ahgz'
+    user: 'mocktests@drrajus.com',
+    pass: 'Omsairam@444'
   }
 
 });
