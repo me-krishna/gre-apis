@@ -53,7 +53,7 @@ adminRouter.post('/delete-test', auth, updatePracticeTestDeleteStatus) // Get Mo
 // upload.single('upload')
 adminRouter.post('/single-upload', upload.single('upload'), uploadExamImage)
 
-adminRouter.get('/email', auth, sendEmail)
+adminRouter.post('/email', auth, sendEmail)
 adminRouter.get('/hello', (req, res) => {
   res.send("Hello World")
 });

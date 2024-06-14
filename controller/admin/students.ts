@@ -3,6 +3,7 @@ import createResponse from "../../utils/api-resp"
 import { addNewStudent, getListofStudents, GetStudentsTotalCount, updateStudent } from "../../model/admin/students.model";
 import { GetStudentsValidation } from "../../validation/admin/students";
 import { generate } from "generate-password";
+import { generateEmail } from "./email";
 export const GetStudents = async (req: Request, res: Response) => {
   const { value, error, warning } = GetStudentsValidation(req.query);
   if (!error) {
@@ -48,8 +49,14 @@ export const AddNewStudent = async (req: Request, res: Response) => {
         strict: true
       })
     }
-    const result = await addNewStudent(payload);
-    createResponse(res, { status: 200, message: 'Success', data: result, metadata: {} });
+    const result = await addNewStudent(payload) as any;
+    if (result?.insertId) {
+      const email = await generateEmail(payload.email, payload.name, payload.password)
+      await updateStudent({ isWelcomeEmailSent: email === true ? 1 : 0 }, result.insertId);
+      createResponse(res, { status: 200, message: 'Success', data: [], metadata: {} });
+    } else {
+      createResponse(res, { status: 400, message: 'Bad Request', data: null, metadata: {} });
+    }
   } catch (error) {
     createResponse(res, { status: 500, message: 'Internal Server Error', data: null, metadata: {} });
   }

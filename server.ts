@@ -14,6 +14,7 @@ Server.use(express.urlencoded({ extended: true }));
 Server.use(cors({ origin: '*', methods: 'GET,POST,PUT,DELETE,PATCH' }));
 
 Server.use("/mock-test", express.static(join(__dirname, 'public/uploads')));
+Server.use("/logos", express.static(join(__dirname, 'public/logos')));
 
 Server.use("/api/v1/admin", adminRouter);
 Server.use("/api/v1/student", students);
