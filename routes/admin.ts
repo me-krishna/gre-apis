@@ -51,7 +51,7 @@ adminRouter.post('/delete-test', auth, updatePracticeTestDeleteStatus) // Get Mo
 
 // Geniric Routes
 // upload.single('upload')
-adminRouter.post('/single-upload', upload.single('upload'), uploadExamImage)
+adminRouter.post('/single-upload',auth, upload.single('upload'), uploadExamImage)
 
 adminRouter.post('/email', auth, sendEmail)
 adminRouter.get('/hello', (req, res) => {
